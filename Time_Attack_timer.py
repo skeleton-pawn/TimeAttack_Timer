@@ -12,8 +12,9 @@ from datetime import datetime
 class StopwatchApp(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Time Attack Stopwatch-v0.9")
-        self.resize(400, 400)
+        self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint) # Keep the window on top
+        self.setWindowTitle("Time Attack Stopwatch-v1.0")
+        self.resize(420, 420)
         self.init_ui()
         self.reset_all()
         self.countdown_timer = QTimer(self)
@@ -73,14 +74,11 @@ class StopwatchApp(QWidget):
         self.reset_button.clicked.connect(self.reset_all)
         button_layout.addWidget(self.reset_button)
 
-        self.edit_button = QPushButton("Edit Labels")
-        self.edit_button.clicked.connect(self.edit_labels)
-        button_layout.addWidget(self.edit_button)
-        
         layout.addLayout(button_layout)
 
         self.result_area = QTextEdit()
         self.result_area.setReadOnly(True)
+        self.result_area.setStyleSheet("font-size: 18px; text-align: left;")
         layout.addWidget(self.result_area)
 
         self.setLayout(layout)
@@ -242,17 +240,6 @@ class StopwatchApp(QWidget):
             self.result_area.append("Results saved to stopwatch_results.csv")
         except Exception as e:
             self.result_area.append(f"Error saving results: {str(e)}")
-
-    def edit_labels(self):
-        if not self.labels:
-            return
-        for i, label in enumerate(self.labels):
-            new_label, ok = QInputDialog.getText(self, "Edit Label", f"Rename '{label}':")
-            if ok and new_label.strip():
-                self.labels[i] = new_label.strip()
-        self.refresh_result_area()
-        # Set focus back after dialog closes
-        self.setFocus()
 
     def refresh_result_area(self):
         self.result_area.clear()
