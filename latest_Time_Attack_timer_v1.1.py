@@ -13,7 +13,7 @@ class StopwatchApp(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint) # Keep the window on top
-        self.setWindowTitle("Time Attack Stopwatch-v1.0")
+        self.setWindowTitle("Time Attack Stopwatch-v1.1")
         self.resize(420, 420)
         self.init_ui()
         self.reset_all()
@@ -224,6 +224,7 @@ class StopwatchApp(QWidget):
         self.result_area.clear()
 
         self.start_button.setText("Start")
+        self.start_button.setEnabled(True)  # Enable the start button
         self.next_button.setEnabled(False)
         self.trial_input.setEnabled(True)
         # Set focus to the main window on reset
